@@ -205,3 +205,32 @@ class Team:
     name: str
     owner: str
     roster: Roster
+
+
+class PlayerRanking:
+    """Holds a list of player rankings and gets different types of rankings based on overall"""
+
+    def __init__(self, players: list[Player]) -> None:
+        """
+        Store an overall list of players as a ranking, from highest rank to lowest rank.
+
+        :param players: List of players, ranked
+        """
+        self._players: list[Player] = players
+
+    def get_ovr_rankings(self) -> list[Player]:
+        """
+        Return current overall rankings, with all positions mixed in
+
+        :return: List of overall rankings, high ranking to low
+        """
+        return self._players
+
+    def get_pos_rankings(self, position: Position) -> list[Player]:
+        """
+        Return current player rankings, filtered by a given position
+
+        :param position: Player position to filter by
+        :return: List of players at given position
+        """
+        return [player for player in self._players if player.position == position]
