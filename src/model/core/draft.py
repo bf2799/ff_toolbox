@@ -97,3 +97,21 @@ class Draft:
         :return: Undrafted players
         """
         return self._undrafted
+
+    @property
+    def drafted(self) -> list[Player]:
+        """
+        Return list of drafted players as effectively read-only. No outside source should change this.
+
+        :return: Drafted players
+        """
+        return self._picks
+
+    @property
+    def settings(self) -> LeagueSettings:
+        """
+        Return current league settings as effectively read-only. No outside source should change this
+
+        :return: League settings
+        """
+        return self._settings
