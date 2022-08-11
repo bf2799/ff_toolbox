@@ -1,6 +1,6 @@
 """Representation of a fantasy football draft."""
-from src.model.general.phys_representations import Player, Team
-from src.model.general.settings import LeagueSettings
+from src.model.core.phys_representations import Player, Team
+from src.model.core.settings import LeagueSettings
 
 
 class Draft:
