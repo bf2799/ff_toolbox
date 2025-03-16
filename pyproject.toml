@@ -20,9 +20,6 @@ dev = [
 [tool.mypy]
 strict = true
 
-[tool.ruff.format]
-line-ending = "cr-lf"
-
 [tool.ruff.lint]
 select = [
     # isort
