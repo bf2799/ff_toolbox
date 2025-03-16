@@ -1,6 +1,41 @@
-[tool.isort]
-profile = "black"
+[project]
+name = "ff-toolbox"
+version = "0.1.0"
+description = "UI and backend to help with fantasy football live drafting, trade analysis, and more."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.15.0",
+    "ruff>=0.11.0",
+    "rust-just>=1.40.0",
+]
 
 [tool.mypy]
 strict = true
-ignore_missing_imports = true
+
+[tool.ruff.lint]
+select = [
+    # isort
+    "I",
+    # mccabe
+    # "C",
+    # pycodestyle
+    "E",
+    "W",
+    # Pyflakes
+    "F",
+]
+ignore = [
+    # TODO: Remove E501 by fixing docstrings
+    "E501"
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402"]

@@ -1,10 +1,13 @@
 """Module for the abstract pick suggestor and its dependencies."""
+
 from abc import ABC, abstractmethod
 
-from src.model.core.draft import Draft
-from src.model.core.phys_representations import Player
-from src.model.pick_analyzers.abstract_pick_analyzer import AbstractPickAnalyzer
-from src.model.pick_predictors.abstract_pick_predictor import AbstractPickPredictor
+from ff_toolbox.model.core.draft import Draft
+from ff_toolbox.model.core.phys_representations import Player
+from ff_toolbox.model.pick_analyzers.abstract_pick_analyzer import AbstractPickAnalyzer
+from ff_toolbox.model.pick_predictors.abstract_pick_predictor import (
+    AbstractPickPredictor,
+)
 
 
 class AbstractPickSuggestor(ABC):

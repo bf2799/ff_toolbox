@@ -1,7 +1,7 @@
 """Module for default rankings generator and any helpers needed."""
 
-from src.model.core.phys_representations import PlayerRanking
-from src.model.rankings_generators.abstract_rankings_generator import (
+from ff_toolbox.model.core.phys_representations import PlayerRanking
+from ff_toolbox.model.rankings_generators.abstract_rankings_generator import (
     AbstractRankingsGenerator,
 )
 

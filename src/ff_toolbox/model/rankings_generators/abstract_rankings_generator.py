@@ -1,7 +1,8 @@
 """Module for an abstract rankings generator and its unique dependencies."""
+
 from abc import ABC, abstractmethod
 
-from src.model.core.phys_representations import PlayerRanking
+from ff_toolbox.model.core.phys_representations import PlayerRanking
 
 
 class AbstractRankingsGenerator(ABC):

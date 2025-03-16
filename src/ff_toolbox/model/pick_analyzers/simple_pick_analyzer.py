@@ -1,7 +1,8 @@
 """Module for the simple pick analyzer and any sub-classes it needs to leverage."""
-from src.model.core.phys_representations import Player, PlayerRanking, Roster
-from src.model.core.settings import LeagueSettings
-from src.model.pick_analyzers.abstract_pick_analyzer import AbstractPickAnalyzer
+
+from ff_toolbox.model.core.phys_representations import Player, PlayerRanking, Roster
+from ff_toolbox.model.core.settings import LeagueSettings
+from ff_toolbox.model.pick_analyzers.abstract_pick_analyzer import AbstractPickAnalyzer
 
 
 class SimplePickAnalyzer(AbstractPickAnalyzer):
