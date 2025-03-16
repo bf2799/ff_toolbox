@@ -88,3 +88,12 @@ class Draft:
         if round % 2 == 0:
             team_num = len(self._order) - team_num - 1
         return self._order[team_num]
+
+    @property
+    def undrafted(self) -> list[Player]:
+        """
+        Return list of undrafted players as effectively read-only. No outside source should change this.
+
+        :return: Undrafted players
+        """
+        return self._undrafted
