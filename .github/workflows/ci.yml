@@ -28,12 +28,10 @@ jobs:
           cache-dependency-glob: "uv.lock"
 
       - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version-file: ".python-version"
+        run: uv python install
 
       - name: Install Project
         run: uv sync --all-extras --dev
 
       - name: Test Release
-        run: uv run just release
+        run: uv run ruff --version && uv run just release
