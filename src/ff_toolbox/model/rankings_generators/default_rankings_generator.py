@@ -1,5 +1,7 @@
 """Module for default rankings generator and any helpers needed."""
 
+from typing import override
+
 from ff_toolbox.model.core.phys_representations import PlayerRanking
 from ff_toolbox.model.rankings_generators.abstract_rankings_generator import (
     AbstractRankingsGenerator,
@@ -7,24 +9,16 @@ from ff_toolbox.model.rankings_generators.abstract_rankings_generator import (
 
 
 class DefaultRankingsGenerator(AbstractRankingsGenerator):
-    """
-    Class to return default rankings exactly the same as consensus rankings.
+    """Class to return default rankings exactly the same as consensus rankings.
 
     Useful for helping to simulate auto-picking.
     """
 
-    def __init__(self, consensus_rankings: PlayerRanking) -> None:
-        """
-        Initializes parent class with consensus rankings.
-
-        :param consensus_rankings:
-        """
-        super().__init__(consensus_rankings)
-
+    @override
     def generate_rankings(self) -> PlayerRanking:
-        """
-        Generate rankings that are exactly the same as consensus rankings
+        """Generate rankings that are exactly the same as consensus rankings.
 
-        :return: Consensus player rankings
+        Returns:
+            PlayerRanking: Consensus player rankings
         """
         return self._consensus_rankings

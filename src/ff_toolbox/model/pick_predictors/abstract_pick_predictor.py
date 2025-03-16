@@ -11,8 +11,7 @@ from ff_toolbox.model.rankings_generators.abstract_rankings_generator import (
 
 
 class AbstractPickPredictor(ABC):
-    """
-    Base class for a pick predictor, outlinining all functions and values pick predictors must implement.
+    """Base class for a pick predictor, outlinining all functions and values pick predictors must implement.
 
     A pick predictor predicts the probability each player will be available x more picks into the future in a draft.
     Selections are divided into "my" selections and "opponent" selections.
@@ -27,13 +26,13 @@ class AbstractPickPredictor(ABC):
         my_rankings: PlayerRanking,
         opp_rankings_generator: AbstractRankingsGenerator,
     ) -> None:
-        """
-        Takes in a set of my rankings/pick analyzer and opponent rankings generator/pick analyzer for consistent pick prediction use.
+        """Take in a set of my rankings/pick analyzer and opponent rankings generator/pick analyzer for consistent pick prediction use.
 
-        :param my_pick_analyzer: How to analyze my picks for player value
-        :param opp_pick_analyzer: How to analyze opponent picks for player value
-        :param my_rankings: How my players are ranked
-        :param opp_rankings_generator: How to generate rankings for opponent players
+        Params:
+            my_pick_analyzer (AbstractPickAnalyzer): How to analyze my picks for player value
+            opp_pick_analyzer (AbstractPickAnalyzer): How to analyze opponent picks for player value
+            my_rankings (PlayerRanking): How my players are ranked
+            opp_rankings_generator (AbstractRankingsGenerator): How to generate rankings for opponent players
         """
         self._my_pick_analyzer: AbstractPickAnalyzer = my_pick_analyzer
         self._opp_pick_analyzer: AbstractPickAnalyzer = opp_pick_analyzer
@@ -44,20 +43,21 @@ class AbstractPickPredictor(ABC):
     def predict_picks(
         self, draft_status: Draft, num_picks: list[int]
     ) -> dict[Player, list[float]]:
-        """
-        Calculate probability each player will be available num_picks into the future given current draft status.
+        """Calculate probability each player will be available num_picks into the future given current draft status.
 
-        :param draft_status: Current state of the draft
-        :param num_picks: Number of picks into the future to predict (can be multiple picks to see availability at)
-        :return: Dictionary of (player, probability of availability at each pick provided) pairs
+        Params:
+            draft_status (Draft): Current state of the draft
+            num_picks (list[int]): Number of picks into the future to predict (can be multiple picks to see availability at)
+
+        Returns:
+            dict[Player, list[float]]: Dictionary of (player, probability of availability at each pick provided) pairs
         """
-        pass
 
     @property
     def my_rankings(self) -> PlayerRanking:
-        """
-        Get my rankings as read-only.
+        """Get my rankings as read-only.
 
-        :return: My rankings
+        Returns:
+            PlayerRanking: My rankings
         """
         return self._my_rankings

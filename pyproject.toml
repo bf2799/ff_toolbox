@@ -29,12 +29,16 @@ select = [
     # pycodestyle
     "E",
     "W",
+    # pydocstyle
+    "D",
     # Pyflakes
     "F",
 ]
 ignore = [
-    # TODO: Remove E501 by fixing docstrings
-    "E501"
+    # Missing docstring in magic method
+    "D105",
+    # Taken care of by formatting. Ignore for docstrings
+    "E501",
 ]
 
 [tool.ruff.lint.mccabe]
@@ -42,4 +46,7 @@ ignore = [
 max-complexity = 20
 
 [tool.ruff.lint.per-file-ignores]
-"__init__.py" = ["E402"]
+"__init__.py" = ["D104"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
