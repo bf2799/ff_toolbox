@@ -13,35 +13,27 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # Test creation of virtual environment
-  create-venv:
+  test:
+    name: python
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
-      with:
-          python-version: '3.10'
-    - uses: syphar/restore-virtualenv@v1
-      id: cache-virtualenv
-
-    - uses: syphar/restore-pip-download-cache@v1
-      if: steps.cache-virtualenv.outputs.cache-hit != 'true'
-
-    - run: pip install -r requirements.txt
-      if: steps.cache-virtualenv.outputs.cache-hit != 'true'
-
-  # Check code standards
-  lint:
-    needs: create-venv
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+    
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: '3.10'
-      - uses: syphar/restore-virtualenv@v1
-        id: cache-virtualenv
+          version: "0.6.6"
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
 
-      # Runs linting on repository
-      - run: chmod +x ci/run_lint_remote.sh
-      - run: ./ci/run_lint_remote.sh
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+
+      - name: Install Project
+        run: uv sync --all-extras --dev
+
+      - name: Test Release
+        run: uv run just release

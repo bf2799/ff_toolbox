@@ -1,9 +1,12 @@
 """Module for the Null Pick Predictor and its helpers."""
-from src.model.core.draft import Draft
-from src.model.core.phys_representations import Player, PlayerRanking
-from src.model.pick_analyzers.abstract_pick_analyzer import AbstractPickAnalyzer
-from src.model.pick_predictors.abstract_pick_predictor import AbstractPickPredictor
-from src.model.rankings_generators.abstract_rankings_generator import (
+
+from ff_toolbox.model.core.draft import Draft
+from ff_toolbox.model.core.phys_representations import Player, PlayerRanking
+from ff_toolbox.model.pick_analyzers.abstract_pick_analyzer import AbstractPickAnalyzer
+from ff_toolbox.model.pick_predictors.abstract_pick_predictor import (
+    AbstractPickPredictor,
+)
+from ff_toolbox.model.rankings_generators.abstract_rankings_generator import (
     AbstractRankingsGenerator,
 )
 

@@ -1,8 +1,10 @@
 """Module for simple pick suggestor and any dependencies."""
 
-from src.model.core.draft import Draft
-from src.model.core.phys_representations import Player
-from src.model.pick_suggestors.abstract_pick_suggestor import AbstractPickSuggestor
+from ff_toolbox.model.core.draft import Draft
+from ff_toolbox.model.core.phys_representations import Player
+from ff_toolbox.model.pick_suggestors.abstract_pick_suggestor import (
+    AbstractPickSuggestor,
+)
 
 
 class SimplePickSuggestor(AbstractPickSuggestor):
