@@ -1,5 +1,7 @@
 """Module for the simple pick analyzer and any sub-classes it needs to leverage."""
 
+from typing import override
+
 from ff_toolbox.model.core.phys_representations import Player, PlayerRanking, Roster
 from ff_toolbox.model.core.settings import LeagueSettings
 from ff_toolbox.model.pick_analyzers.abstract_pick_analyzer import AbstractPickAnalyzer
@@ -8,10 +10,7 @@ from ff_toolbox.model.pick_analyzers.abstract_pick_analyzer import AbstractPickA
 class SimplePickAnalyzer(AbstractPickAnalyzer):
     """Assigns values to available players based on VOR. More detailed analysis of how this occurs will come."""
 
-    def __init__(self) -> None:
-        """No-op"""
-        super().__init__()
-
+    @override
     def eval_players(
         self,
         avail_players: list[Player],
@@ -19,14 +18,16 @@ class SimplePickAnalyzer(AbstractPickAnalyzer):
         my_roster: Roster,
         settings: LeagueSettings,
     ) -> dict[Player, float]:
-        """
-        Simple pick analyzer to assign a VOR (value over replacement) to each player. More details to come.
+        """Assign a VOR (value over replacement) to each player. More details to come.
 
-        :param avail_players: Players to evaluate
-        :param my_ranking: Personal ranking of all players (can include non-available players)
-        :param my_roster: Current roster construction of team evaluating players
-        :param settings: League settings to abide by
-        :return: Dictionary of (player, value) pairs
+        Params:
+            avail_players (list[Player]): Players to evaluate
+            my_ranking (PlayerRanking): Personal ranking of all players (can include non-available players)
+            my_roster (Roster): Current roster construction of team evaluating players
+            settings (LeagueSettings): League settings to abide by
+
+        Returns:
+            dict[Player, float]: Dictionary of (player, value) pairs
         """
         # Current fake implementation for sake of testing architectural development
         return {

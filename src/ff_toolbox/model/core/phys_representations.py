@@ -16,7 +16,7 @@ class Position(Enum):
 
 
 class RosterSpot(Enum):
-    """Possible roster spots on a roster, listed in order of priority"""
+    """Possible roster spots on a roster, listed in order of priority."""
 
     QB = 0
     RB = 1
@@ -32,13 +32,13 @@ class RosterSpot(Enum):
 
 @dataclass
 class Player:
-    """
-    Representation of football player in fantasy football.
+    """Representation of football player in fantasy football.
 
-    :param position: Primary position of player
-    :param name: Full name of player
-    :param team: NFL team of player
-    :param ir_eligible: Whether player can use IR slot or not
+    Params:
+        position (Position): Primary position of player
+        name (str): Full name of player
+        team (str): NFL team of player
+        ir_eligible (bool): Whether player can use IR slot or not
     """
 
     position: Position
@@ -47,11 +47,13 @@ class Player:
     ir_eligible: bool
 
     def is_roster_eligible(self, roster_spot: RosterSpot) -> bool:
-        """
-        Return whether player is eligible for given roster spot on a fantasy team.
+        """Return whether player is eligible for given roster spot on a fantasy team.
 
-        :param roster_spot: Roster spot to check eligibility for
-        :return: True if player is eligible for roster spot, False if not
+        Params:
+            roster_spot (RosterSpot): Roster spot to check eligibility for
+
+        Returns:
+            bool: True if player is eligible for roster spot, False if not
         """
         match roster_spot:
             case RosterSpot.QB:
@@ -85,28 +87,25 @@ class Player:
 
 
 class Roster:
-    """
-    Representation of an owner's roster in fantasy football.
-
-    :param settings: Roster spot settings
-    :param players: Current players on the roster associated with each roster spot
-    """
+    """Representation of an owner's roster in fantasy football."""
 
     def __init__(self, settings: dict[RosterSpot, int]) -> None:
-        """
-        Create a new, empty roster with given roster settings.
+        """Create a new, empty roster with given roster settings.
 
-        :param settings: Max number of players for each roster spot type
+        Params:
+            settings (dict[RosterSpot, int]): Max number of players for each roster spot type
         """
         self._settings: dict[RosterSpot, int] = settings
         self._players: dict[RosterSpot, list[Player]] = {pos: [] for pos in RosterSpot}
 
     def add_player(self, player: Player) -> None:
-        """
-        Add new player to roster if possible.
+        """Add new player to roster if possible.
 
-        :param player: Player to add to roster
-        :raises RuntimeError: No space on roster for player
+        Params:
+            player (Player): Player to add to roster
+
+        Raises:
+            RuntimeError: No space on roster for player
         """
         added: bool = False
         for spot in RosterSpot:
@@ -120,22 +119,24 @@ class Roster:
             raise RuntimeError(f"No space on roster for player {player}")
 
     def remove_player(self, player: Player) -> None:
-        """
-        Remove given player from roster if on roster.
+        """Remove given player from roster if on roster.
 
-        :param player: Player to remove from roster
+        Params:
+            player (Player): Player to remove from roster
         """
         for roster_spot, players in self._players.items():
             if player in players:
                 self._players[roster_spot].remove(player)
 
     def swap_players(self, player1: Player, player2: Player) -> None:
-        """
-        Swap roster spots of two players on roster.
+        """Swap roster spots of two players on roster.
 
-        :param player1: First player to swap
-        :param player2: Second player to swap
-        :raise RuntimeError: Unable to swap two players
+        Params:
+            player1 (Player): First player to swap
+            player2 (Player): Second player to swap
+
+        Raises:
+            RuntimeError: Unable to swap two players
         """
         # Validate each other's roster spot
         p1_roster_spot: RosterSpot | None = None
@@ -156,11 +157,11 @@ class Roster:
         self._players[p2_roster_spot].append(player1)
 
     def move_player(self, player: Player, roster_spot: RosterSpot) -> None:
-        """
-        Move player from current roster spot to a given open roster spot.
+        """Move player from current roster spot to a given open roster spot.
 
-        :param player: Player whose spot to change
-        :param roster_spot: Roster spot to move to
+        Params:
+            player (Player): Player whose spot to change
+            roster_spot (RosterSpot): Roster spot to move to
         """
         # Verify there's space at roster spot for player and player is eligible to play there
         if len(self._players[roster_spot]) >= self._settings[roster_spot]:
@@ -195,12 +196,12 @@ class Roster:
 
 @dataclass
 class Team:
-    """
-    Representation of an owner's fantasy team in fantasy football.
+    """Representation of an owner's fantasy team in fantasy football.
 
-    :param name: Team name
-    :param owner: Owner's name
-    :param roster: Team's roster
+    Params:
+        name (str): Team name
+        owner (str): Owner's name
+        roster (Roster): Team's roster
     """
 
     name: str
@@ -209,29 +210,31 @@ class Team:
 
 
 class PlayerRanking:
-    """Holds a list of player rankings and gets different types of rankings based on overall"""
+    """Holds a list of player rankings and gets different types of rankings based on overall."""
 
     def __init__(self, players: list[Player]) -> None:
-        """
-        Store an overall list of players as a ranking, from highest rank to lowest rank.
+        """Store an overall list of players as a ranking, from highest rank to lowest rank.
 
-        :param players: List of players, ranked
+        Params:
+            players (list[Player]): List of players, ranked
         """
         self._players: list[Player] = players
 
     def get_ovr_rankings(self) -> list[Player]:
-        """
-        Return current overall rankings, with all positions mixed in
+        """Return current overall rankings, with all positions mixed in.
 
-        :return: List of overall rankings, high ranking to low
+        Returns:
+            list[Player] List of overall rankings, high ranking to low
         """
         return self._players
 
     def get_pos_rankings(self, position: Position) -> list[Player]:
-        """
-        Return current player rankings, filtered by a given position
+        """Return current player rankings, filtered by a given position.
 
-        :param position: Player position to filter by
-        :return: List of players at given position
+        Params:
+            position (Position): Player position to filter by
+
+        Returns:
+            list[Player] List of players at given position
         """
         return [player for player in self._players if player.position == position]
