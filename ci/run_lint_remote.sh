@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # Source bash common
 source ci/bash_common.sh
 
