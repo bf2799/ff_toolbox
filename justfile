@@ -1,7 +1,7 @@
 default: release
 
 format:
-    uv run ruff format --check
+    uv run ruff format --check --diff
 
 lint:
     uv run ruff check
