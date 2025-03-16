@@ -1,7 +1,8 @@
 """Types of settings existing throughout fantasy football toolbox."""
+
 from dataclasses import dataclass
 
-from src.model.general.phys_representations import RosterSpot
+from ff_toolbox.model.core.phys_representations import RosterSpot
 
 
 @dataclass

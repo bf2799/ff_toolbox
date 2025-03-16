@@ -1,4 +1,5 @@
 """Conglomeration of data types that represent physical things in the fantasy football world."""
+
 from dataclasses import dataclass
 from enum import Enum
 
