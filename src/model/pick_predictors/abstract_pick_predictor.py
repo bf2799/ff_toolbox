@@ -52,3 +52,12 @@ class AbstractPickPredictor(ABC):
         :return: Dictionary of (player, probability of availability at each pick provided) pairs
         """
         pass
+
+    @property
+    def my_rankings(self) -> PlayerRanking:
+        """
+        Get my rankings as read-only.
+
+        :return: My rankings
+        """
+        return self._my_rankings
