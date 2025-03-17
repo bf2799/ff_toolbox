@@ -40,18 +40,19 @@ class Draft:
             RuntimeError: Player unavailable to pick, can't add another pick
         """
         if player not in self._undrafted:
-            raise RuntimeError(f"Player {player} not available to pick")
+            err = f"Player {player} not available to pick"
+            raise RuntimeError(err)
         if (not pick_num) or (pick_num - 1 == len(self._picks)):
             # If adding next pick, remove player from undrafted and add to next pick's team
             if len(self._picks) == len(self._order) * self._rounds:
-                raise RuntimeError("Can't add another pick. Draft already complete.")
+                err = "Can't add another pick. Draft already complete."
+                raise RuntimeError(err)
             self.pick_num_to_team(len(self._picks) + 1).roster.add_player(player)
             self._undrafted.remove(player)
             self._picks.append(player)
         elif (len(self._picks) < pick_num - 1) or (pick_num <= 0):
-            raise ValueError(
-                f"Pick number {pick_num} is out of range. The next pick is pick {len(self._picks) + 1}"
-            )
+            err = f"Pick number {pick_num} is out of range. The next pick is pick {len(self._picks) + 1}"
+            raise ValueError(err)
         else:
             # If changing pick, remove player from team and add to player pool.
             self.pick_num_to_team(pick_num).roster.remove_player(player)
@@ -68,7 +69,7 @@ class Draft:
             num_picks (int | None): Number of picks to delete from end of draft. None to delete all picks.
         """
         new_num_picks = num_picks if num_picks else len(self._picks)
-        for pick in range(new_num_picks):
+        for _ in range(new_num_picks):
             self.pick_num_to_team(len(self._picks)).roster.remove_player(
                 self._picks[-1]
             )
@@ -89,10 +90,11 @@ class Draft:
         """
         num_picks: int = len(self._order) * self._rounds
         if pick_num <= 0 or pick_num > num_picks:
-            raise ValueError(f"Pick number {pick_num} for draft with {num_picks} picks")
+            err = f"Pick number {pick_num} for draft with {num_picks} picks"
+            raise ValueError(err)
         team_num = (pick_num - 1) % len(self._order)
-        round = (pick_num - 1) // len(self._order) + 1
-        if round % 2 == 0:
+        draft_round = (pick_num - 1) // len(self._order) + 1
+        if draft_round % 2 == 0:
             team_num = len(self._order) - team_num - 1
         return self._order[team_num]
 

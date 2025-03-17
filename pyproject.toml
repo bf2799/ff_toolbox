@@ -22,19 +22,11 @@ strict = true
 
 [tool.ruff.lint]
 select = [
-    # isort
-    "I",
-    # mccabe
-    "C",
-    # pycodestyle
-    "E",
-    "W",
-    # pydocstyle
-    "D",
-    # Pyflakes
-    "F",
+    "ALL",
 ]
 ignore = [
+    # Missing trailing comma (not recommended with formatter)
+    "COM812",
     # Missing docstring in magic method
     "D105",
     # Taken care of by formatting. Ignore for docstrings

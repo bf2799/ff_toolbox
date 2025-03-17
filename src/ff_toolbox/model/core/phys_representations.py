@@ -55,32 +55,36 @@ class Player:
         Returns:
             bool: True if player is eligible for roster spot, False if not
         """
+        ret = False
         match roster_spot:
             case RosterSpot.QB:
-                return self.position == Position.QB
+                ret = self.position == Position.QB
             case RosterSpot.RB:
-                return self.position == Position.RB
+                ret = self.position == Position.RB
             case RosterSpot.WR:
-                return self.position == Position.WR
+                ret = self.position == Position.WR
             case RosterSpot.TE:
-                return self.position == Position.TE
+                ret = self.position == Position.TE
             case RosterSpot.DST:
-                return self.position == Position.DST
+                ret = self.position == Position.DST
             case RosterSpot.K:
-                return self.position == Position.K
+                ret = self.position == Position.K
             case RosterSpot.FLEX:
-                return self.position in [Position.RB, Position.WR, Position.TE]
+                ret = self.position in [Position.RB, Position.WR, Position.TE]
             case RosterSpot.QBFLEX:
-                return self.position in [
+                ret = self.position in [
                     Position.QB,
                     Position.RB,
                     Position.WR,
                     Position.TE,
                 ]
             case RosterSpot.BENCH:
-                return True
+                ret = True
             case RosterSpot.IR:
-                return self.ir_eligible
+                ret = self.ir_eligible
+            case _:
+                ret = False
+        return ret
 
     def __str__(self) -> str:
         return f"{self.name} {self.team} ({self.position.name})"
@@ -116,7 +120,8 @@ class Roster:
                 added = True
                 break
         if not added:
-            raise RuntimeError(f"No space on roster for player {player}")
+            err = f"No space on roster for player {player}"
+            raise RuntimeError(err)
 
     def remove_player(self, player: Player) -> None:
         """Remove given player from roster if on roster.
@@ -148,9 +153,8 @@ class Roster:
                 p2_roster_spot = roster_spot
         # Swap spot on roster
         if not (p1_roster_spot and p2_roster_spot):
-            raise RuntimeError(
-                f"Couldn't swap players {player1} and {player2} on roster"
-            )
+            err = f"Couldn't swap players {player1} and {player2} on roster"
+            raise RuntimeError(err)
         self._players[p1_roster_spot].remove(player1)
         self._players[p1_roster_spot].append(player2)
         self._players[p2_roster_spot].remove(player2)
@@ -165,22 +169,21 @@ class Roster:
         """
         # Verify there's space at roster spot for player and player is eligible to play there
         if len(self._players[roster_spot]) >= self._settings[roster_spot]:
-            raise RuntimeError(
-                f"No open roster spot at {roster_spot.name} to move player to"
-            )
+            err = f"No open roster spot at {roster_spot.name} to move player to"
+            raise RuntimeError(err)
         if not player.is_roster_eligible(roster_spot):
-            raise RuntimeError(
-                f"Player {player} isn't eligible to be placed at {roster_spot.name}"
-            )
+            err = f"Player {player} isn't eligible to be placed at {roster_spot.name}"
+            raise RuntimeError(err)
         # Verify player is on roster and remove them from roster temporarily
         player_on_roster: bool = False
-        for roster_spot, players in self._players.items():
+        for roster_spot_, players in self._players.items():
             if player in players:
-                self._players[roster_spot].remove(player)
+                self._players[roster_spot_].remove(player)
                 player_on_roster = True
                 break
         if not player_on_roster:
-            raise RuntimeError(f"Player {player} does not already exist on roster")
+            err = f"Player {player} does not already exist on roster"
+            raise RuntimeError(err)
         # Add player back to new roster spot
         self._players[roster_spot].append(player)
 
