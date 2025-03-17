@@ -22,7 +22,6 @@ class SimplePickSuggestor(AbstractPickSuggestor):
         Returns:
             dict[Player, float]: Dictionary of {undrafted_player, relative_suggestion_strength}, sorted by suggestion strength
         """
-        #
         player_rankings = self._my_pick_analyzer.eval_players(
             avail_players=draft_status.undrafted,
             my_ranking=self._pick_predictor.my_rankings,
